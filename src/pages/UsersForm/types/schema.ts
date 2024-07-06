@@ -9,3 +9,10 @@ export const schema = z.object({
     .min(1, { message: "Email is required" })
     .refine((text) => PATTERNS.email.test(text), { message: "Email not valid" }),
 });
+
+export type SchemaType = z.infer<typeof schema>;
+
+export const defaultValues: SchemaType = {
+  name: "",
+  email: "",
+};
