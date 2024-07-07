@@ -1,5 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { DevTool } from "@hookform/devtools";
 
 import { defaultValues, schema, SchemaType } from "./types/schema";
 
@@ -15,6 +16,7 @@ const UsersFormProvider = () => {
   return (
     <FormProvider {...formMethods}>
       <UsersForm />
+      <DevTool control={formMethods.control} />
     </FormProvider>
   );
 };
