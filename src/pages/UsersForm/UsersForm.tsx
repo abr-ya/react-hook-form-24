@@ -1,13 +1,14 @@
 import { Container, Stack, TextField } from "@mui/material";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 
-import { RHFAutocomplete } from "@/components";
+import { RHFAutocomplete, RHFToggleButtonGroup } from "@/components";
 import { SchemaType } from "./types/schema";
-import { useStates } from "./services/queries";
+import { useLanguages, useStates } from "./services/queries";
 
 const UsersForm = () => {
   // get data from server
   const statesQuery = useStates();
+  const languagesQuery = useLanguages();
 
   const {
     handleSubmit,
@@ -27,6 +28,7 @@ const UsersForm = () => {
           <TextField {...register("name")} label="Name" error={!!errors.name} helperText={errors.name?.message} />
           <TextField {...register("email")} label="Email" error={!!errors.email} helperText={errors.email?.message} />
           <RHFAutocomplete<SchemaType> name="states" label="States" options={statesQuery.data} />
+          <RHFToggleButtonGroup<SchemaType> name="languagesSpoken" options={languagesQuery.data} />
         </Stack>
       </Stack>
     </Container>
