@@ -32,12 +32,16 @@ export function RHFAutocomplete<T extends FieldValues>({ name, options, label }:
           renderInput={(params) => (
             <TextField {...params} fullWidth inputRef={ref} error={!!error} helperText={error?.message} label={label} />
           )}
-          renderOption={(props, option, { selected }) => (
-            <Box component="li" {...props}>
-              <Checkbox icon={<CheckBoxOutlineBlankIcon />} checkedIcon={<CheckBoxIcon />} checked={selected} />
-              {option.label}
-            </Box>
-          )}
+          renderOption={(props, option, { selected }) => {
+            const { key, ...restProps } = props;
+
+            return (
+              <Box component="li" key={key} {...restProps}>
+                <Checkbox icon={<CheckBoxOutlineBlankIcon />} checkedIcon={<CheckBoxIcon />} checked={selected} />
+                {option.label}
+              </Box>
+            );
+          }}
         />
       )}
     />
