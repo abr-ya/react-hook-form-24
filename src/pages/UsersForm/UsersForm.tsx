@@ -1,15 +1,16 @@
 import { Container, Stack, TextField } from "@mui/material";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 
-import { RHFAutocomplete, RHFRadioGroup, RHFToggleButtonGroup } from "@/components";
+import { RHFAutocomplete, RHFCheckbox, RHFRadioGroup, RHFToggleButtonGroup } from "@/components";
 import { SchemaType } from "./types/schema";
-import { useGenders, useLanguages, useStates } from "./services/queries";
+import { useGenders, useLanguages, useSkills, useStates } from "./services/queries";
 
 const UsersForm = () => {
   // get data from server
   const statesQuery = useStates();
   const languagesQuery = useLanguages();
   const gendersQuery = useGenders();
+  const skillsQuery = useSkills();
 
   const {
     handleSubmit,
@@ -31,6 +32,7 @@ const UsersForm = () => {
           <RHFAutocomplete<SchemaType> name="states" label="States" options={statesQuery.data} />
           <RHFToggleButtonGroup<SchemaType> name="languagesSpoken" options={languagesQuery.data} />
           <RHFRadioGroup<SchemaType> name="gender" options={gendersQuery.data} label="Gender" />
+          <RHFCheckbox<SchemaType> name="skills" options={skillsQuery.data} label="Skills" />
         </Stack>
       </Stack>
     </Container>

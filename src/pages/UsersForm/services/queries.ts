@@ -6,7 +6,9 @@ import { usersApi } from "@/api/users";
 const getStates = () => usersApi.get<Option[]>("states").then((res) => res.data);
 const getLanguages = () => usersApi.get<Option[]>("languages").then((res) => res.data);
 const getGenders = () => usersApi.get<Option[]>("genders").then((res) => res.data);
+const getSkills = () => usersApi.get<Option[]>("skills").then((res) => res.data);
 
 export const useStates = () => useQuery({ queryKey: ["states"], queryFn: getStates });
 export const useLanguages = () => useQuery({ queryKey: ["languages"], queryFn: getLanguages });
 export const useGenders = () => useQuery({ queryKey: ["genders"], queryFn: getGenders });
+export const useSkills = () => useQuery({ queryKey: ["skills"], queryFn: getSkills });
