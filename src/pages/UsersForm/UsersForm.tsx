@@ -1,7 +1,14 @@
 import { Container, Stack, TextField, Typography } from "@mui/material";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 
-import { RHFAutocomplete, RHFCheckbox, RHFDateTimePicker, RHFRadioGroup, RHFToggleButtonGroup } from "@/components";
+import {
+  RHFAutocomplete,
+  RHFCheckbox,
+  RHFDateTimePicker,
+  RHFRadioGroup,
+  RHFSlider,
+  RHFToggleButtonGroup,
+} from "@/components";
 import { SchemaType } from "./types/schema";
 import { useGenders, useLanguages, useSkills, useStates } from "./services/queries";
 import { RHFDateRangePicker } from "@/components/RHFDateRangePicker";
@@ -37,6 +44,7 @@ const UsersForm = () => {
           <RHFDateTimePicker<SchemaType> name="registerDateAndTime" label="Registration Date & Time" />
           <Typography>Former Employment Period:</Typography>
           <RHFDateRangePicker<SchemaType> name="employmentPeriod" />
+          <RHFSlider<SchemaType> name="salaryRange" label="Salary Range" min={500} max={10000} />
         </Stack>
       </Stack>
     </Container>
