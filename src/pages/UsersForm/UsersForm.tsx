@@ -1,7 +1,7 @@
 import { Container, Stack, TextField } from "@mui/material";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 
-import { RHFAutocomplete, RHFCheckbox, RHFRadioGroup, RHFToggleButtonGroup } from "@/components";
+import { RHFAutocomplete, RHFCheckbox, RHFDateTimePicker, RHFRadioGroup, RHFToggleButtonGroup } from "@/components";
 import { SchemaType } from "./types/schema";
 import { useGenders, useLanguages, useSkills, useStates } from "./services/queries";
 
@@ -33,6 +33,7 @@ const UsersForm = () => {
           <RHFToggleButtonGroup<SchemaType> name="languagesSpoken" options={languagesQuery.data} />
           <RHFRadioGroup<SchemaType> name="gender" options={gendersQuery.data} label="Gender" />
           <RHFCheckbox<SchemaType> name="skills" options={skillsQuery.data} label="Skills" />
+          <RHFDateTimePicker<SchemaType> name="registerDateAndTime" label="Registration Date & Time" />
         </Stack>
       </Stack>
     </Container>
