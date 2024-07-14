@@ -1,9 +1,10 @@
-import { Container, Stack, TextField } from "@mui/material";
+import { Container, Stack, TextField, Typography } from "@mui/material";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 
 import { RHFAutocomplete, RHFCheckbox, RHFDateTimePicker, RHFRadioGroup, RHFToggleButtonGroup } from "@/components";
 import { SchemaType } from "./types/schema";
 import { useGenders, useLanguages, useSkills, useStates } from "./services/queries";
+import { RHFDateRangePicker } from "@/components/RHFDateRangePicker";
 
 const UsersForm = () => {
   // get data from server
@@ -34,6 +35,8 @@ const UsersForm = () => {
           <RHFRadioGroup<SchemaType> name="gender" options={gendersQuery.data} label="Gender" />
           <RHFCheckbox<SchemaType> name="skills" options={skillsQuery.data} label="Skills" />
           <RHFDateTimePicker<SchemaType> name="registerDateAndTime" label="Registration Date & Time" />
+          <Typography>Former Employment Period:</Typography>
+          <RHFDateRangePicker<SchemaType> name="employmentPeriod" />
         </Stack>
       </Stack>
     </Container>
