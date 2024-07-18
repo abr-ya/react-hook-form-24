@@ -12,6 +12,7 @@ import {
 import { SchemaType } from "./types/schema";
 import { useGenders, useLanguages, useSkills, useStates } from "./services/queries";
 import { RHFDateRangePicker } from "@/components/RHFDateRangePicker";
+import { RHFSwitch } from "@/components/RHFSwitch";
 
 const UsersForm = () => {
   // get data from server
@@ -45,6 +46,7 @@ const UsersForm = () => {
           <Typography>Former Employment Period:</Typography>
           <RHFDateRangePicker<SchemaType> name="employmentPeriod" />
           <RHFSlider<SchemaType> name="salaryRange" label="Salary Range" min={500} max={10000} />
+          <RHFSwitch<SchemaType> name="isTeacher" label="Are you a teacher?" />
         </Stack>
       </Stack>
     </Container>
