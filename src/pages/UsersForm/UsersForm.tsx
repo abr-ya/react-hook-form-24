@@ -1,18 +1,19 @@
-import { Container, Stack, TextField, Typography } from "@mui/material";
+import { Container, Stack, Typography } from "@mui/material";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 
 import {
   RHFAutocomplete,
   RHFCheckbox,
+  RHFDateRangePicker,
   RHFDateTimePicker,
   RHFRadioGroup,
   RHFSlider,
+  RHFSwitch,
+  RHFTextField,
   RHFToggleButtonGroup,
 } from "@/components";
 import { SchemaType } from "./types/schema";
 import { useGenders, useLanguages, useSkills, useStates } from "./services/queries";
-import { RHFDateRangePicker } from "@/components/RHFDateRangePicker";
-import { RHFSwitch } from "@/components/RHFSwitch";
 
 const UsersForm = () => {
   // get data from server
@@ -21,11 +22,7 @@ const UsersForm = () => {
   const gendersQuery = useGenders();
   const skillsQuery = useSkills();
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useFormContext<SchemaType>();
+  const { handleSubmit } = useFormContext<SchemaType>();
 
   const onSubmit: SubmitHandler<SchemaType> = (data) => {
     console.log(data);
@@ -36,8 +33,8 @@ const UsersForm = () => {
       <Stack sx={{ flexDirection: "row", gap: 2 }}>
         Some Controls
         <Stack sx={{ gap: 2 }}>
-          <TextField {...register("name")} label="Name" error={!!errors.name} helperText={errors.name?.message} />
-          <TextField {...register("email")} label="Email" error={!!errors.email} helperText={errors.email?.message} />
+          <RHFTextField name="name" />
+          <RHFTextField name="email" />
           <RHFAutocomplete<SchemaType> name="states" label="States" options={statesQuery.data} />
           <RHFToggleButtonGroup<SchemaType> name="languagesSpoken" options={languagesQuery.data} />
           <RHFRadioGroup<SchemaType> name="gender" options={gendersQuery.data} label="Gender" />
