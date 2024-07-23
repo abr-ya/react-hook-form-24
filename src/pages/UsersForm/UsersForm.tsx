@@ -33,8 +33,8 @@ const UsersForm = () => {
       <Stack sx={{ flexDirection: "row", gap: 2 }}>
         Some Controls
         <Stack sx={{ gap: 2 }}>
-          <RHFTextField name="name" />
-          <RHFTextField name="email" />
+          <RHFTextField name="name" label="Name" />
+          <RHFTextField name="email" label="Email" />
           <RHFAutocomplete<SchemaType> name="states" label="States" options={statesQuery.data} />
           <RHFToggleButtonGroup<SchemaType> name="languagesSpoken" options={languagesQuery.data} />
           <RHFRadioGroup<SchemaType> name="gender" options={gendersQuery.data} label="Gender" />
