@@ -1,5 +1,6 @@
-import { Container, Stack, Typography } from "@mui/material";
-import { SubmitHandler, useFormContext } from "react-hook-form";
+import { Fragment } from "react";
+import { Button, Container, Stack, Typography } from "@mui/material";
+import { SubmitHandler, useFieldArray, useFormContext, useWatch } from "react-hook-form";
 
 import {
   RHFAutocomplete,
@@ -22,11 +23,18 @@ const UsersForm = () => {
   const gendersQuery = useGenders();
   const skillsQuery = useSkills();
 
-  const { handleSubmit } = useFormContext<SchemaType>();
+  const { handleSubmit, control } = useFormContext<SchemaType>();
 
   const onSubmit: SubmitHandler<SchemaType> = (data) => {
     console.log(data);
   };
+
+  const isTeacher = useWatch({ control, name: "isTeacher" });
+
+  const { append, fields, remove } = useFieldArray({
+    control,
+    name: "students",
+  });
 
   return (
     <Container maxWidth="sm" component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -44,6 +52,27 @@ const UsersForm = () => {
           <RHFDateRangePicker<SchemaType> name="employmentPeriod" />
           <RHFSlider<SchemaType> name="salaryRange" label="Salary Range" min={500} max={10000} />
           <RHFSwitch<SchemaType> name="isTeacher" label="Are you a teacher?" />
+
+          {isTeacher && (
+            <Button onClick={() => append({ name: "" })} type="button">
+              Add new student
+            </Button>
+          )}
+
+          {fields.map((field, index) => (
+            <Fragment key={field.id}>
+              <RHFTextField<SchemaType> name={`students.${index}.name`} label="Name" />
+              <Button
+                color="error"
+                onClick={() => {
+                  remove(index);
+                }}
+                type="button"
+              >
+                Remove
+              </Button>
+            </Fragment>
+          ))}
         </Stack>
       </Stack>
     </Container>
