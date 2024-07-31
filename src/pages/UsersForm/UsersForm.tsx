@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Button, Container, Stack, Typography } from "@mui/material";
 import { SubmitHandler, useFieldArray, useFormContext, useWatch } from "react-hook-form";
 
@@ -13,7 +13,7 @@ import {
   RHFTextField,
   RHFToggleButtonGroup,
 } from "@/components";
-import { SchemaType } from "./types/schema";
+import { defaultValues, SchemaType } from "./types/schema";
 import { useGenders, useLanguages, useSkills, useStates } from "./services/queries";
 
 const UsersForm = () => {
@@ -23,7 +23,7 @@ const UsersForm = () => {
   const gendersQuery = useGenders();
   const skillsQuery = useSkills();
 
-  const { handleSubmit, control } = useFormContext<SchemaType>();
+  const { handleSubmit, control, reset, unregister } = useFormContext<SchemaType>();
 
   const onSubmit: SubmitHandler<SchemaType> = (data) => {
     console.log(data);
@@ -31,10 +31,22 @@ const UsersForm = () => {
 
   const isTeacher = useWatch({ control, name: "isTeacher" });
 
-  const { append, fields, remove } = useFieldArray({
+  const { append, fields, remove, replace } = useFieldArray({
     control,
     name: "students",
   });
+
+  // cleaning if not teacher
+  useEffect(() => {
+    if (!isTeacher) {
+      replace([]);
+      unregister("students");
+    }
+  }, [isTeacher, replace, unregister]);
+
+  const ResetHandler = () => {
+    reset(defaultValues);
+  };
 
   return (
     <Container maxWidth="sm" component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -73,6 +85,11 @@ const UsersForm = () => {
               </Button>
             </Fragment>
           ))}
+
+          <Stack sx={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <Button type="submit">New user</Button>
+            <Button onClick={ResetHandler}>Reset</Button>
+          </Stack>
         </Stack>
       </Stack>
     </Container>
