@@ -14,7 +14,7 @@ import {
   RHFToggleButtonGroup,
 } from "@/components";
 import { defaultValues, SchemaType } from "./types/schema";
-import { useGenders, useLanguages, useSkills, useStates } from "./services/queries";
+import { useGenders, useLanguages, useSkills, useStates, useUser } from "./services/queries";
 
 const UsersForm = () => {
   // get data from server
@@ -22,6 +22,7 @@ const UsersForm = () => {
   const languagesQuery = useLanguages();
   const gendersQuery = useGenders();
   const skillsQuery = useSkills();
+  const userQuery = useUser("2");
 
   const { handleSubmit, control, reset, unregister } = useFormContext<SchemaType>();
 
@@ -47,6 +48,9 @@ const UsersForm = () => {
   const ResetHandler = () => {
     reset(defaultValues);
   };
+
+  // temp
+  console.log("user 2:", userQuery.data);
 
   return (
     <Container maxWidth="sm" component="form" onSubmit={handleSubmit(onSubmit)}>
