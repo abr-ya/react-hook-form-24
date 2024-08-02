@@ -34,15 +34,13 @@ const UsersForm = () => {
   const skillsQuery = useSkills();
   const usersQuery = useUsers();
 
-  // todo: add watche for id
-  const userQuery = useUser("2");
-
-  const { handleSubmit, control, reset, unregister } = useFormContext<SchemaType>();
+  const { handleSubmit, control, reset, setValue, unregister } = useFormContext<SchemaType>();
 
   const onSubmit: SubmitHandler<SchemaType> = (data) => {
     console.log(data);
   };
 
+  const id = useWatch({ control, name: "id" });
   const isTeacher = useWatch({ control, name: "isTeacher" });
 
   const { append, fields, remove, replace } = useFieldArray({
@@ -58,26 +56,31 @@ const UsersForm = () => {
     }
   }, [isTeacher, replace, unregister]);
 
-  const ResetHandler = () => {
+  const resetHandler = () => {
     reset(defaultValues);
   };
 
-  // temp
-  console.log("user 2:", userQuery.data);
-
-  const userClickHandler = () => {
-    console.log("user click");
+  const userClickHandler = (id: string) => {
+    // console.log("click", id);
+    setValue("id", id);
   };
+
+  const userQuery = useUser(id);
+
+  useEffect(() => {
+    if (userQuery.data) {
+      reset(userQuery.data);
+    }
+  }, [reset, userQuery.data]);
 
   return (
     <Container maxWidth="sm" component="form" onSubmit={handleSubmit(onSubmit)}>
       <Stack sx={{ flexDirection: "row", gap: 2 }}>
         <List subheader={<ListSubheader>Users</ListSubheader>}>
-          {usersQuery.data?.map((user) => (
-            <ListItem disablePadding key={user.id}>
-              {/* todo: add id! */}
-              <ListItemButton onClick={userClickHandler} selected={user.id === "2"}>
-                <ListItemText primary={user.label} />
+          {usersQuery.data?.map(({ id: userID, label }) => (
+            <ListItem disablePadding key={userID}>
+              <ListItemButton onClick={() => userClickHandler(userID)} selected={userID === id}>
+                <ListItemText primary={label} />
               </ListItemButton>
             </ListItem>
           ))}
@@ -119,7 +122,7 @@ const UsersForm = () => {
 
           <Stack sx={{ flexDirection: "row", justifyContent: "space-between" }}>
             <Button type="submit">New user</Button>
-            <Button onClick={ResetHandler}>Reset</Button>
+            <Button onClick={resetHandler}>Reset</Button>
           </Stack>
         </Stack>
       </Stack>
