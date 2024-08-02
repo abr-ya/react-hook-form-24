@@ -1,5 +1,15 @@
 import { Fragment, useEffect } from "react";
-import { Button, Container, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  ListSubheader,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { SubmitHandler, useFieldArray, useFormContext, useWatch } from "react-hook-form";
 
 import {
@@ -14,7 +24,7 @@ import {
   RHFToggleButtonGroup,
 } from "@/components";
 import { defaultValues, SchemaType } from "./types/schema";
-import { useGenders, useLanguages, useSkills, useStates, useUser } from "./services/queries";
+import { useGenders, useLanguages, useSkills, useStates, useUser, useUsers } from "./services/queries";
 
 const UsersForm = () => {
   // get data from server
@@ -22,6 +32,9 @@ const UsersForm = () => {
   const languagesQuery = useLanguages();
   const gendersQuery = useGenders();
   const skillsQuery = useSkills();
+  const usersQuery = useUsers();
+
+  // todo: add watche for id
   const userQuery = useUser("2");
 
   const { handleSubmit, control, reset, unregister } = useFormContext<SchemaType>();
@@ -52,10 +65,24 @@ const UsersForm = () => {
   // temp
   console.log("user 2:", userQuery.data);
 
+  const userClickHandler = () => {
+    console.log("user click");
+  };
+
   return (
     <Container maxWidth="sm" component="form" onSubmit={handleSubmit(onSubmit)}>
       <Stack sx={{ flexDirection: "row", gap: 2 }}>
-        Some Controls
+        <List subheader={<ListSubheader>Users</ListSubheader>}>
+          {usersQuery.data?.map((user) => (
+            <ListItem disablePadding key={user.id}>
+              {/* todo: add id! */}
+              <ListItemButton onClick={userClickHandler} selected={user.id === "2"}>
+                <ListItemText primary={user.label} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+
         <Stack sx={{ gap: 2 }}>
           <RHFTextField name="name" label="Name" />
           <RHFTextField name="email" label="Email" />

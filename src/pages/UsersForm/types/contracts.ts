@@ -23,5 +23,5 @@ type ApiCommon = {
   }[];
 };
 
-export type ApiCreateEdit = ApiCommon & (Create | Edit);
-export type ApiGet = ApiCommon & Edit;
+export type ApiCreateEditUser = ApiCommon & (Create | Edit);
+export type ApiGetUser = ApiCommon & Edit;
