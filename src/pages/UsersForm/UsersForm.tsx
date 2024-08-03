@@ -25,7 +25,8 @@ import {
 } from "@/components";
 import { defaultValues, SchemaType } from "./types/schema";
 import { useGenders, useLanguages, useSkills, useStates, useUser, useUsers } from "./services/queries";
-import { useCreateUser } from "./services/mutations";
+import { useCreateUser, useEditUser } from "./services/mutations";
+import { useQueryClient } from "@tanstack/react-query";
 
 const UsersForm = () => {
   // get data from server
@@ -65,21 +66,24 @@ const UsersForm = () => {
 
   const userQuery = useUser(id);
 
+  // update form data when new data received
   useEffect(() => {
     if (userQuery.data) {
       reset(userQuery.data);
     }
   }, [reset, userQuery.data]);
 
-  const createUserMutation = useCreateUser();
+  const queryClient = useQueryClient();
+
+  const createUserMutation = useCreateUser(queryClient);
+  const editUserMutation = useEditUser(queryClient);
 
   const submitHandler: SubmitHandler<SchemaType> = (data) => {
     console.log(data);
     if (variant === "create") {
       createUserMutation.mutate(data);
     } else {
-      console.log("edit user");
-      // edit User
+      editUserMutation.mutate(data);
     }
   };
 
