@@ -4,10 +4,10 @@ type Create = {
 
 type Edit = {
   variant: "edit";
-  id: number;
+  id: string;
 };
 
-type ApiCommon = {
+export type ApiCommon = {
   email: string;
   name: string;
   states: string[];

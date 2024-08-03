@@ -4,7 +4,7 @@ import { Option } from "@/types/option";
 import { usersApi } from "@/api/users";
 import { SchemaType } from "../types/schema";
 import { ApiGetUser } from "../types/contracts";
-import { normalizeUser } from "./normalize";
+import { normalizeGetUser } from "./normalize";
 
 const getStates = () => usersApi.get<Option[]>("states").then((res) => res.data);
 const getLanguages = () => usersApi.get<Option[]>("languages").then((res) => res.data);
@@ -21,7 +21,7 @@ const getUsers = () =>
 const getUser = async (id: string): Promise<SchemaType> => {
   const { data } = await usersApi.get<ApiGetUser>(`/users/${id}`);
 
-  return normalizeUser(data);
+  return normalizeGetUser(data);
 };
 
 export const useStates = () => useQuery({ queryKey: ["states"], queryFn: getStates });

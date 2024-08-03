@@ -25,6 +25,7 @@ import {
 } from "@/components";
 import { defaultValues, SchemaType } from "./types/schema";
 import { useGenders, useLanguages, useSkills, useStates, useUser, useUsers } from "./services/queries";
+import { useCreateUser } from "./services/mutations";
 
 const UsersForm = () => {
   // get data from server
@@ -36,12 +37,9 @@ const UsersForm = () => {
 
   const { handleSubmit, control, reset, setValue, unregister } = useFormContext<SchemaType>();
 
-  const onSubmit: SubmitHandler<SchemaType> = (data) => {
-    console.log(data);
-  };
-
   const id = useWatch({ control, name: "id" });
   const isTeacher = useWatch({ control, name: "isTeacher" });
+  const variant = useWatch({ control, name: "variant" });
 
   const { append, fields, remove, replace } = useFieldArray({
     control,
@@ -73,8 +71,20 @@ const UsersForm = () => {
     }
   }, [reset, userQuery.data]);
 
+  const createUserMutation = useCreateUser();
+
+  const submitHandler: SubmitHandler<SchemaType> = (data) => {
+    console.log(data);
+    if (variant === "create") {
+      createUserMutation.mutate(data);
+    } else {
+      console.log("edit user");
+      // edit User
+    }
+  };
+
   return (
-    <Container maxWidth="sm" component="form" onSubmit={handleSubmit(onSubmit)}>
+    <Container maxWidth="sm" component="form" onSubmit={handleSubmit(submitHandler)}>
       <Stack sx={{ flexDirection: "row", gap: 2 }}>
         <List subheader={<ListSubheader>Users</ListSubheader>}>
           {usersQuery.data?.map(({ id: userID, label }) => (
@@ -121,7 +131,9 @@ const UsersForm = () => {
           ))}
 
           <Stack sx={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <Button type="submit">New user</Button>
+            <Button type="submit" variant="contained">
+              {variant === "create" ? "Create" : "Update"} user
+            </Button>
             <Button onClick={resetHandler}>Reset</Button>
           </Stack>
         </Stack>
