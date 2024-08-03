@@ -5,14 +5,9 @@ import { normalizeSendUser } from "./normalize";
 
 const queryClient = useQueryClient();
 
-// todo: try chaning style!
-export const useCreateUser = () =>
-  useMutation({
-    mutationFn: async (data: SchemaType) => {
-      await usersApi.post("users", normalizeSendUser(data)); // todo: not need 'variant' here?
-    },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["users"] });
-      alert("User created!");
-    },
-  });
+const createUserFn = (data: SchemaType) =>
+  usersApi.post("users", normalizeSendUser(data)).then((res) => console.log(res));
+const createUserSuccess = () =>
+  queryClient.invalidateQueries({ queryKey: ["users"] }).then(() => alert("User created!"));
+
+export const useCreateUser = () => useMutation({ mutationFn: createUserFn, onSuccess: createUserSuccess });
