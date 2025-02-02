@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Error404, Home, Pokemons, UsersForm } from "./pages";
+import { Error404, Food, Home, Pokemons, UsersForm } from "./pages";
 import MainLayout from "./layout/MainLayout";
 
 const App = () => (
@@ -9,6 +9,7 @@ const App = () => (
         <Route index element={<Home />} />
         <Route path="/users" element={<UsersForm />} />
         <Route path="/pokemons" element={<Pokemons />} />
+        <Route path="/food" element={<Food />} />
         <Route path="*" element={<Error404 />} />
       </Route>
     </Routes>
