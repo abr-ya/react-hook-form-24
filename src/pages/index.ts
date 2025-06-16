@@ -5,3 +5,4 @@ export { default as Hotel } from "./Hotel/Hotel";
 export { default as List } from "./List/List";
 export { default as Pokemons } from "./Pokemons/Pokemons";
 export { default as UsersForm } from "./UsersForm/UsersFormProvider";
+export { default as BlogPosts } from "./BlogPosts/BlogPosts";
