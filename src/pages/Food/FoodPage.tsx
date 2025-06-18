@@ -1,6 +1,10 @@
+import { useIngredients } from "./services/queries";
 import { distributeProducts, getArrSum } from "./utils";
 
 const FoodPage = () => {
+  const ingredientsQuery = useIngredients();
+  console.log(ingredientsQuery.data);
+
   // todo: => file
   const DESC = (a: number, b: number) => b - a;
 

@@ -1,3 +1,4 @@
 VITE_REM1=url/
 VITE_USERS_API=url/
 VITE_BLOG_API=url/
+VITE_FOOD_API=url/

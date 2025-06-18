@@ -1,3 +1,4 @@
 /api-blog/*  http://109.248.160.77:3333/:splat  200
+/api-food/*  http://109.248.160.77:4004/:splat  200
 /api-users/*  http://a33d887184fe.vps.myjino.ru:49251/:splat  200
 /* /index.html 200
