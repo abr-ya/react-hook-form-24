@@ -1,0 +1,12 @@
+[build]
+command = "sed -i \"s|API_USERS_TAG|${USERS_API}|g\" netlify.toml && yarn build"
+
+[[redirects]]
+from = "/api-users/*"
+to = "API_USERS_TAG:splat"
+status = 200
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
